@@ -3,8 +3,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.autos.*;
@@ -34,7 +37,9 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
 
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    SendableChooser<Command> chooser = new SendableChooser<>();
+
+
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
@@ -46,18 +51,16 @@ public class RobotContainer {
             )
         );
 
-        s_Swerve.setDefaultCommand(
-            new TeleopSwerveTrigg(
-                s_Swerve, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
-            )
-        );
+        chooser.addOption("StraightAuto", StraightAuto);
+        chooser.addOption("SAuto", SAuto);
+        SmartDashboard.putData(chooser);
+
         // Configure the button bindings
         configureButtonBindings();
     }
+
+    Command StraightAuto = new SequentialCommandGroup(new straightAuto(s_Swerve));
+    Command SAuto = new SequentialCommandGroup(new exampleAuto(s_Swerve));
 
     /**
      * Use this method to define your button->command mappings. Buttons can be created by
@@ -79,6 +82,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+        return chooser.getSelected();
     }
 }
