@@ -37,7 +37,7 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
 
-    SendableChooser<Command> chooser = new SendableChooser<>();
+    SendableChooser<Command> autochooser = new SendableChooser<>();
 
 
     public RobotContainer() {
@@ -51,15 +51,15 @@ public class RobotContainer {
             )
         );
 
-        chooser.addOption("StraightAuto", StraightAuto);
-        chooser.addOption("SAuto", SAuto);
-        SmartDashboard.putData(chooser);
+        autochooser.addOption("StraightAuto", StraightAuto);
+        autochooser.addOption("SAuto", SAuto);
+        SmartDashboard.putData("Auto Chooser", autochooser);
 
         // Configure the button bindings
         configureButtonBindings();
     }
 
-    Command StraightAuto = new SequentialCommandGroup(new straightAuto(s_Swerve));
+    Command StraightAuto = new SequentialCommandGroup(new auto1(s_Swerve));
     Command SAuto = new SequentialCommandGroup(new exampleAuto(s_Swerve));
 
     /**
@@ -82,6 +82,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return chooser.getSelected();
+        return autochooser.getSelected();
     }
 }
