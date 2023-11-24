@@ -30,9 +30,16 @@ public class RobotContainer {
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton resetModules = new JoystickButton(driver, 2);
+    private final JoystickButton zeroGyro = new JoystickButton(driver, 4); //Y
+    private final JoystickButton robotCentric = new JoystickButton(driver, 5); //LB
+    private final JoystickButton resetModules = new JoystickButton(driver, 2); //B
+    private final JoystickButton slowSwerve = new JoystickButton(driver, 1); //A
+
+    /*Operator Controls */
+
+
+    /*Operator Buttons */
+    
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -64,7 +71,12 @@ ShuffleBoardConfig shuffleboardConfig;
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-         resetModules.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+        resetModules.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+
+        slowSwerve.onTrue(new InstantCommand(() -> s_Swerve.setSlow(true)));
+        slowSwerve.onFalse(new InstantCommand(() -> s_Swerve.setSlow(false)));
+
+        /*Operator Buttons */
 
     }
 
@@ -78,6 +90,8 @@ ShuffleBoardConfig shuffleboardConfig;
         switch (val.getSelected()) {
             case "StraightPath1":
                 return new StraightPath1(s_Swerve);
+            case "Bob":
+                return new Bob(s_Swerve);
         default:
             return null;
         }

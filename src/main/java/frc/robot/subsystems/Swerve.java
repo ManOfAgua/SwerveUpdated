@@ -25,6 +25,8 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    public boolean slowSwerve;
+
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -51,7 +53,9 @@ public class Swerve extends SubsystemBase {
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-        SwerveModuleState[] swerveModuleStates =
+        SwerveModuleState[] swerveModuleStates;
+        if (!slowSwerve){
+            swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                                     translation.getX(), 
@@ -64,6 +68,22 @@ public class Swerve extends SubsystemBase {
                                     translation.getY(), 
                                     rotation)
                                 );
+                        }
+        else {
+            swerveModuleStates =
+            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+               fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
+                                   translation.getX() * .2, 
+                                   translation.getY() * .2, 
+                                   rotation * .2, 
+                                   getYaw()
+                               )
+                               : new ChassisSpeeds(
+                                   translation.getX() * .2, 
+                                   translation.getY() * .2, 
+                                   rotation * .2)
+                           );
+             }
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
         for(SwerveModule mod : mSwerveMods){
@@ -84,6 +104,14 @@ public class Swerve extends SubsystemBase {
     
     public void resetOdometry(Pose2d pose) {
         swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
+    }
+
+    public void setSlow(boolean slow){
+        if (slow){
+        slowSwerve = true;}
+        else{
+        slowSwerve = false;
+        }
     }
 
     public SwerveModuleState[] getModuleStates(){
