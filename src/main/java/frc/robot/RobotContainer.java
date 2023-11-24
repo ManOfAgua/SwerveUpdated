@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import frc.robot.ShuffleBoard.ShuffleBoardConfig;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -32,13 +32,12 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-     private final JoystickButton resetModules = new JoystickButton(driver, 2);
+    private final JoystickButton resetModules = new JoystickButton(driver, 2);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
 
-    SendableChooser<Command> autochooser = new SendableChooser<>();
-
+ShuffleBoardConfig shuffleboardConfig;
 
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
@@ -51,16 +50,10 @@ public class RobotContainer {
             )
         );
 
-        autochooser.addOption("StraightAuto", StraightAuto);
-        autochooser.addOption("SAuto", SAuto);
-        SmartDashboard.putData("Auto Chooser", autochooser);
-
+        shuffleboardConfig = new ShuffleBoardConfig();
         // Configure the button bindings
         configureButtonBindings();
     }
-
-    Command StraightAuto = new SequentialCommandGroup(new auto1(s_Swerve));
-    Command SAuto = new SequentialCommandGroup(new exampleAuto(s_Swerve));
 
     /**
      * Use this method to define your button->command mappings. Buttons can be created by
@@ -81,7 +74,15 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return autochooser.getSelected();
+        SendableChooser<String> val = (SendableChooser)SmartDashboard.getData("Auton Chooser");
+        switch (val.getSelected()) {
+            case "StraightPath1":
+                return new StraightPath1(s_Swerve);
+        default:
+            return null;
+        }
+        }
     }
-}
+
+
+    

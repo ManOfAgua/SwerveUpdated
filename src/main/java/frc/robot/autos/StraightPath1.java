@@ -14,8 +14,8 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class auto1 extends SequentialCommandGroup {
-    public auto1(Swerve s_Swerve){
+public class StraightPath1 extends SequentialCommandGroup {
+    public StraightPath1(Swerve s_Swerve){
 
 
 ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("StraightPath1",
