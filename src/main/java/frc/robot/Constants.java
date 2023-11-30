@@ -74,9 +74,9 @@ public final class Constants {
 
         /* Drive Motor Characterization Values 
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        public static final double driveKS = (0.055044 / 12); //: Probably redo this
-        public static final double driveKV = (2.3503 / 12);
-        public static final double driveKA = (0.11095 / 12);
+        public static final double driveKS = (0.075149 / 12); //: Probably redo this
+        public static final double driveKV = (15.773 / 12);
+        public static final double driveKA = (0.89484 / 12);
 
         /* Swerve Profiling Values */
         /** Meters per Second */
@@ -94,7 +94,7 @@ public final class Constants {
             public static final int driveMotorID = 6;
             public static final int angleMotorID = 5;
             public static final int canCoderID = 11;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-148.3);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(210.5);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -104,7 +104,7 @@ public final class Constants {
             public static final int driveMotorID = 8;
             public static final int angleMotorID = 7;
             public static final int canCoderID = 12;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(162.7);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(160.1);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -114,7 +114,7 @@ public final class Constants {
             public static final int driveMotorID = 2;
             public static final int angleMotorID = 1;
             public static final int canCoderID = 13;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(157.9);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(158.8);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -124,10 +124,50 @@ public final class Constants {
             public static final int driveMotorID = 4;
             public static final int angleMotorID = 3;
             public static final int canCoderID = 10;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(173.4);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(170.4);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
+    }
+
+        public enum DriveConstants {
+            translation(1), 
+            strafe(0), 
+            rotation(2);//4 for xbox 2 for ps4
+
+            public final int value;
+            DriveConstants(int value) {
+              this.value = value;
+        }
+    }
+
+    public enum OperateConstants {
+        some1(1),
+        some2(2),
+        some3(3);
+
+        public final int value;
+        OperateConstants(int value) {
+          this.value = value;
+    }
+    }
+        public static final class ControllerConstants{
+            public static final int
+                driver = 0, 
+                operator = 1,
+            //ps4
+                zeroGyro = 3, 
+                robotCentric = 5, 
+                resetModules = 2, 
+                slowSwerveon = 11, 
+                slowSwerveoff = 12,
+                
+            //xbox
+                zeroGyrox = 4,
+                robotCentricx = 2,
+                resetModulesx = 3,
+                slowSwerveonx = 9,
+                slowSwerveoffx = 10;
     }
 
     public static final class AutoConstants {
@@ -136,7 +176,7 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
     
-        public static final double kPXController = 1;
+        public static final double kPXController = 3;
         public static final double kDXController = 0;
         public static final double kPYController = 1;
         public static final double kDYController = kDXController;

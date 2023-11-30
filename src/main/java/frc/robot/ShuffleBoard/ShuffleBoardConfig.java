@@ -11,8 +11,9 @@ public class ShuffleBoardConfig {
     }
 
     public void addWidgets() {
-        autonChooser.addOption("Straight path", "StraightPath1");
-        autonChooser.addOption("Bob n weave", "Bob");
+        autonChooser.addOption("Straight", "Straight");
+        autonChooser.addOption("Cones", "Cones");
+        autonChooser.addOption("ConesCurve", "ConesCurve");
         
         SmartDashboard.putData("Auton Chooser", autonChooser);
     }

@@ -14,12 +14,12 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class Bob extends SequentialCommandGroup {
-    public Bob(Swerve s_Swerve){
+public class ConesCurve extends SequentialCommandGroup {
+    public ConesCurve(Swerve s_Swerve){
 
 
-ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Bob",
-new PathConstraints(2, 1)
+ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("ConesCurve",
+new PathConstraints(4, 2)
 );
 
 // This is just an example event map. It would be better to have a constant, global event map

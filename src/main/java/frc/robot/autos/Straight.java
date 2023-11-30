@@ -14,12 +14,12 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class StraightPath1 extends SequentialCommandGroup {
-    public StraightPath1(Swerve s_Swerve){
+public class Straight extends SequentialCommandGroup {
+    public Straight(Swerve s_Swerve){
 
 
-ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("StraightPath1",
-new PathConstraints(2, 1)
+ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Straight",
+new PathConstraints(6, 2)
 );
 
 // This is just an example event map. It would be better to have a constant, global event map
@@ -34,7 +34,7 @@ SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
     new PIDConstants(Constants.AutoConstants.kPThetaController, 0.0, Constants.AutoConstants.kDThetaController), // PID constants to correct for rotation error (used to create the rotation controller)
     s_Swerve::setModuleStates, // Module states consumer used to output to the drive subsystem
     eventMap,
-    false, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+    true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
     s_Swerve // The drive subsystem. Used to properly set the requirements of path following commands
 );
 
