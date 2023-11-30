@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.ShuffleBoard.ShuffleBoardConfig;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
@@ -22,21 +22,33 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick driver = new Joystick(0);
+    private final Joystick driver = new Joystick(Constants.ControllerConstants.driver);
+    private final Joystick operator = new Joystick(Constants.ControllerConstants.operator);
 
     /* Drive Controls */
-    private final int translationAxis = XboxController.Axis.kLeftY.value;
-    private final int strafeAxis = XboxController.Axis.kLeftX.value;
-    private final int rotationAxis = XboxController.Axis.kRightX.value;
+    private final int translationAxis = Constants.DriveConstants.translation.value;
+    private final int strafeAxis = Constants.DriveConstants.strafe.value;
+    private final int rotationAxis = Constants.DriveConstants.rotation.value;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, 4); //Y
-    private final JoystickButton robotCentric = new JoystickButton(driver, 5); //LB
-    private final JoystickButton resetModules = new JoystickButton(driver, 2); //B
-    private final JoystickButton slowSwerve = new JoystickButton(driver, 1); //A
+    //ps4
+    private final JoystickButton zeroGyro = new JoystickButton(driver, ControllerConstants.zeroGyro); //O
+    private final JoystickButton robotCentric = new JoystickButton(driver, ControllerConstants.robotCentric); //L1
+    private final JoystickButton resetModules = new JoystickButton(driver, ControllerConstants.resetModules); //X
+    private final JoystickButton slowSwerveon = new JoystickButton(driver, ControllerConstants.slowSwerveon); //Left JoyStick Button
+    private final JoystickButton slowSwerveoff = new JoystickButton(driver, ControllerConstants.slowSwerveoff); //Right JoyStick Button
+
+    //xbox
+    // private final JoystickButton zeroGyro = new JoystickButton(driver, 4); //Y
+    // private final JoystickButton robotCentric = new JoystickButton(driver, 2); //B
+    // private final JoystickButton resetModules = new JoystickButton(driver, 3); //X
+    // private final JoystickButton slowSwerveon = new JoystickButton(driver, 9); //Left JoyStick Button
+    // private final JoystickButton slowSwerveoff = new JoystickButton(driver, 10); //Right JoyStick Button
 
     /*Operator Controls */
-
+    private final int some1 = Constants.OperateConstants.some1.value;
+    private final int some2 = Constants.OperateConstants.some2.value;
+    private final int some3 = Constants.OperateConstants.some3.value;
 
     /*Operator Buttons */
     
@@ -73,8 +85,9 @@ ShuffleBoardConfig shuffleboardConfig;
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         resetModules.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
 
-        slowSwerve.onTrue(new InstantCommand(() -> s_Swerve.setSlow(true)));
-        slowSwerve.onFalse(new InstantCommand(() -> s_Swerve.setSlow(false)));
+        slowSwerveon.toggleOnTrue(new InstantCommand(() -> s_Swerve.setSlow(true)));
+        slowSwerveoff.toggleOnTrue(new InstantCommand(() -> s_Swerve.setSlow(false)));
+
 
         /*Operator Buttons */
 
@@ -88,10 +101,12 @@ ShuffleBoardConfig shuffleboardConfig;
     public Command getAutonomousCommand() {
         SendableChooser<String> val = (SendableChooser)SmartDashboard.getData("Auton Chooser");
         switch (val.getSelected()) {
-            case "StraightPath1":
-                return new StraightPath1(s_Swerve);
-            case "Bob":
-                return new Bob(s_Swerve);
+            case "Straight":
+                return new Straight(s_Swerve);
+            case "Cones":
+                return new Cones(s_Swerve);
+            case "ConesCurve":
+                return new ConesCurve(s_Swerve);
         default:
             return null;
         }
