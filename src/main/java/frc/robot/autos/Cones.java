@@ -19,7 +19,7 @@ public class Cones extends SequentialCommandGroup {
 
 
 ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Cones",
-new PathConstraints(4, 2)
+new PathConstraints(3, 1)
 );
 
 // This is just an example event map. It would be better to have a constant, global event map

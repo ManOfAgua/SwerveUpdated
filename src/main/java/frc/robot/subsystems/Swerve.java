@@ -10,13 +10,17 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenixpro.controls.VoltageOut;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -108,9 +112,11 @@ public class Swerve extends SubsystemBase {
 
     public void setSlow(boolean slow){
         if (slow){
-        slowSwerve = true;}
+        slowSwerve = true;
+        SmartDashboard.putBoolean("Slow Mode", true);}
         else{
         slowSwerve = false;
+        SmartDashboard.putBoolean("Slow Mode", false);
         }
     }
 
@@ -152,11 +158,10 @@ public class Swerve extends SubsystemBase {
         return gyro.getPitch();
     }
 
-
     @Override
     public void periodic(){
         gyroHeading();
-          if (DriverStation.isDisabled()){
+          if (DriverStation.isDisabled()){ 
               resetModulesToAbsolute();
          }
         swerveOdometry.update(getYaw(), getModulePositions());  
@@ -166,7 +171,7 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
-            SmartDashboard.putNumber("Heading", gyroHeading());
             SmartDashboard.putNumber("Pitch", gyroPitch());
-    }
+            SmartDashboard.putNumber ("Heading", gyroHeading());
+        }
 }

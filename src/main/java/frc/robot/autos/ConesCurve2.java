@@ -14,11 +14,11 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class ConesCurve extends SequentialCommandGroup {
-    public ConesCurve(Swerve s_Swerve){
+public class ConesCurve2 extends SequentialCommandGroup {
+    public ConesCurve2(Swerve s_Swerve){
 
 
-ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("ConesCurve",
+ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("ConesCurve2",
 new PathConstraints(3, 1)
 );
 

@@ -21,6 +21,7 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+    private final LimeLight limelight = new LimeLight();
     /* Controllers */
     private final Joystick driver = new Joystick(Constants.ControllerConstants.driver);
     private final Joystick operator = new Joystick(Constants.ControllerConstants.operator);
@@ -107,6 +108,8 @@ ShuffleBoardConfig shuffleboardConfig;
                 return new Cones(s_Swerve);
             case "ConesCurve":
                 return new ConesCurve(s_Swerve);
+            case "ConesCurve2": //ConesCurve that actualy works
+                return new ConesCurve2(s_Swerve);
         default:
             return null;
         }

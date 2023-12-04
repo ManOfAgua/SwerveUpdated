@@ -14,6 +14,7 @@ public class ShuffleBoardConfig {
         autonChooser.addOption("Straight", "Straight");
         autonChooser.addOption("Cones", "Cones");
         autonChooser.addOption("ConesCurve", "ConesCurve");
+        autonChooser.addOption("ConesCurve2", "ConesCurve2");
         
         SmartDashboard.putData("Auton Chooser", autonChooser);
     }

@@ -130,8 +130,8 @@ public final class Constants {
         }
     }
 
-        public enum DriveConstants {
-            translation(1), 
+    public enum DriveConstants {
+            translation(1), //
             strafe(0), 
             rotation(2);//4 for xbox 2 for ps4
 
@@ -151,7 +151,15 @@ public final class Constants {
           this.value = value;
     }
     }
-        public static final class ControllerConstants{
+    public static final class SubsystemConstants{
+        public static final int
+            intakeMotor = 1;
+
+        public static double 
+            intakeMotorSpd = 1;
+        }
+
+    public static final class ControllerConstants{
             public static final int
                 driver = 0, 
                 operator = 1,
