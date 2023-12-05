@@ -21,7 +21,6 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    private final LimeLight limelight = new LimeLight();
     /* Controllers */
     private final Joystick driver = new Joystick(Constants.ControllerConstants.driver);
     private final Joystick operator = new Joystick(Constants.ControllerConstants.operator);
